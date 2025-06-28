@@ -1,0 +1,43 @@
+package me.BigBou.rei_search_bar_calculations.client;
+
+import com.mojang.brigadier.arguments.StringArgumentType;
+import me.shedaniel.rei.api.client.REIRuntime;
+import net.fabricmc.api.ClientModInitializer;
+import net.fabricmc.fabric.api.client.screen.v1.ScreenEvents;
+import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
+import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.font.TextRenderer;
+import net.minecraft.client.gui.screen.ingame.HandledScreen;
+import net.minecraft.server.command.CommandManager;
+import net.minecraft.text.Text;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+public class Rei_search_bar_calculationsClient implements ClientModInitializer {
+
+    private static final Logger log = LoggerFactory.getLogger(Rei_search_bar_calculationsClient.class);
+
+    @Override
+    public void onInitializeClient() {
+        ScreenEvents.BEFORE_INIT.register((client, screen, sw, sh) -> {
+            if (screen instanceof HandledScreen<?> handled) {
+                ScreenEvents.afterRender(screen).register((scr, context, mouseX, mouseY, delta) -> {
+                    // Draw text at top-left of the GUI window
+                    TextRenderer tr = MinecraftClient.getInstance().textRenderer;
+                    int centerX = handled.width / 2;
+                    int bottomY = handled.height;
+                    String text = CalculatorSearch.format(REIRuntime.getInstance().getSearchTextField().getText());
+                    if (text.contains("=")) {
+                        context.drawText(tr, Text.literal(text), centerX-94, bottomY - 32, 0x55FF55, false);
+                    }
+                });
+            }
+        });
+
+        CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) -> {
+            dispatcher.register(CommandManager.literal("calc")
+                    .then(CommandManager.argument("value", StringArgumentType.string())
+                            .executes(CalculatorCommand::executeCommandWithArg)));
+        });
+    }
+}

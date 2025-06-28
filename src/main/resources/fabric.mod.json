@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "id": "rei_search_bar_calculations",
+  "version": "${version}",
+  "name": "REI Search Bar Calculations",
+  "description": "A mod that adds an option to use the search bar as a calculator, similar to the NEU (Not Enough Updates) mod for Hypixel Skyblock.",
+  "authors": [],
+  "contact": {},
+  "license": "MIT",
+  "icon": "assets/rei_search_bar_calculations/icon.png",
+  "environment": "client",
+  "entrypoints": {
+    "client": [
+      "me.BigBou.rei_search_bar_calculations.client.Rei_search_bar_calculationsClient"
+    ],
+    "main": [
+      "me.BigBou.rei_search_bar_calculations.Rei_search_bar_calculations"
+    ],
+    "rei_client": [
+      "me.BigBou.rei_search_bar_calculations.client.CalculatorSearch"
+    ]
+  },
+  "mixins": [
+    "rei_search_bar_calculations.mixins.json",
+    {
+      "config": "rei_search_bar_calculations.client.mixins.json",
+      "environment": "client"
+    }
+  ],
+  "depends": {
+    "fabricloader": ">=${loader_version}",
+    "fabric": "*",
+    "minecraft": "${minecraft_version}"
+  }
+}
