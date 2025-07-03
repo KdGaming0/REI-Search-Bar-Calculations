@@ -1,7 +1,7 @@
 {
   "required": true,
   "minVersion": "0.8",
-  "package": "me.BigBou.rei_search_bar_calculations.mixin.client",
+  "package": "me.BigBou.rei_search_bar_calculations.client.mixin",
   "compatibilityLevel": "JAVA_21",
   "client": [
   ],

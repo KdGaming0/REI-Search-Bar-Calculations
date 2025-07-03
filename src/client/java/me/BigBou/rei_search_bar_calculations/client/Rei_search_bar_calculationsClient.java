@@ -3,12 +3,12 @@ package me.BigBou.rei_search_bar_calculations.client;
 import com.mojang.brigadier.arguments.StringArgumentType;
 import me.shedaniel.rei.api.client.REIRuntime;
 import net.fabricmc.api.ClientModInitializer;
+import net.fabricmc.fabric.api.client.command.v2.ClientCommandManager;
+import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback;
 import net.fabricmc.fabric.api.client.screen.v1.ScreenEvents;
-import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
-import net.minecraft.server.command.CommandManager;
 import net.minecraft.text.Text;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,15 +28,19 @@ public class Rei_search_bar_calculationsClient implements ClientModInitializer {
                     int bottomY = handled.height;
                     String text = CalculatorSearch.format(REIRuntime.getInstance().getSearchTextField().getText());
                     if (text.contains("=")) {
-                        context.drawText(tr, Text.literal(text), centerX-94, bottomY - 32, 0x55FF55, false);
+                        if (!client.player.getGameMode().isCreative()) {
+                            context.drawText(tr, Text.literal(text), centerX - 84, bottomY - 32, 0x55FF55, false);
+                        } else {
+                            context.drawText(tr, Text.literal(text), centerX - 94, bottomY - 32, 0x55FF55, false);
+                        }
                     }
                 });
             }
         });
 
-        CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) -> {
-            dispatcher.register(CommandManager.literal("calc")
-                    .then(CommandManager.argument("value", StringArgumentType.string())
+        ClientCommandRegistrationCallback.EVENT.register((dispatcher, registryAccess) -> {
+            dispatcher.register(ClientCommandManager.literal("calc")
+                    .then(ClientCommandManager.argument("value", StringArgumentType.string())
                             .executes(CalculatorCommand::executeCommandWithArg)));
         });
     }
