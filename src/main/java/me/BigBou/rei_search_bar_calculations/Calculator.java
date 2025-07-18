@@ -30,7 +30,7 @@ public class Calculator {
 	}
 
 	static String binops = "+-*/x";
-	static String postops = "mkbts";
+	static String postops = "mkbtse";
 	static String digits = "0123456789";
 
 	static void readDigitsInto(Token token, String source, boolean decimals) {
@@ -246,11 +246,11 @@ public class Calculator {
 					case POSTOP:
 						BigDecimal p = values.pop();
 						switch (command.operatorValue.intern()) {
-							case "e":
-								values.push(p.multiply(new BigDecimal(160)).setScale(2, RoundingMode.HALF_UP));
-								break;
 							case "s":
 								values.push(p.multiply(new BigDecimal(64)).setScale(2, RoundingMode.HALF_UP));
+								break;
+							case "e":
+								values.push(p.multiply(new BigDecimal(160)).setScale(2, RoundingMode.HALF_UP));
 								break;
 							case "k":
 								values.push(p.multiply(new BigDecimal(1_000)).setScale(2, RoundingMode.HALF_UP));
