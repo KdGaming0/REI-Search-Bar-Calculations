@@ -22,17 +22,15 @@ public class Rei_search_bar_calculationsClient implements ClientModInitializer {
         ScreenEvents.BEFORE_INIT.register((client, screen, sw, sh) -> {
             if (screen instanceof HandledScreen<?> handled) {
                 ScreenEvents.afterRender(screen).register((scr, context, mouseX, mouseY, delta) -> {
-                    // Draw text at top-left of the GUI window
                     TextRenderer tr = MinecraftClient.getInstance().textRenderer;
                     int centerX = handled.width / 2;
                     int bottomY = handled.height;
+                    int textPosX = centerX - 94;
+                    int textPosY = bottomY - 32;
                     String text = CalculatorSearch.format(REIRuntime.getInstance().getSearchTextField().getText());
                     if (text.contains("=")) {
-                        if (!client.player.getGameMode().isCreative()) {
-                            context.drawText(tr, Text.literal(text), centerX - 84, bottomY - 32, 0x55FF55, false);
-                        } else {
-                            context.drawText(tr, Text.literal(text), centerX - 94, bottomY - 32, 0x55FF55, false);
-                        }
+                        if (!client.player.getGameMode().isCreative()) textPosX += 10;
+                        context.drawText(tr, Text.literal(text), textPosX, textPosY, 0x55FF55, false);
                     }
                 });
             }

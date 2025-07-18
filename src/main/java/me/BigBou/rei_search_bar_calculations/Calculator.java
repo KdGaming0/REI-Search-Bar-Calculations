@@ -246,6 +246,9 @@ public class Calculator {
 					case POSTOP:
 						BigDecimal p = values.pop();
 						switch (command.operatorValue.intern()) {
+							case "e":
+								values.push(p.multiply(new BigDecimal(160)).setScale(2, RoundingMode.HALF_UP));
+								break;
 							case "s":
 								values.push(p.multiply(new BigDecimal(64)).setScale(2, RoundingMode.HALF_UP));
 								break;
