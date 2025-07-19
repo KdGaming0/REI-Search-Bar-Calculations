@@ -16,6 +16,8 @@
 
   ![The command in action.](https://cdn.modrinth.com/data/cached_images/727dee7e63861a7b8e59d4ce04f39e1033f70d6d.gif)
 
+- **NEW** Using e for using enchanted variants of items (number*160).
+
 A simple and fast calculator for everyday use!
 
 ## 📖 Dependencies
