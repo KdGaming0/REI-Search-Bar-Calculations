@@ -10,6 +10,8 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.text.Text;
+import net.minecraft.world.GameMode;
+import org.apache.commons.lang3.ObjectUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -29,7 +31,8 @@ public class ReiSearchBarCalculationsClient implements ClientModInitializer {
                     int textPosY = bottomY - 32;
                     String text = CalculatorSearch.format(REIRuntime.getInstance().getSearchTextField().getText());
                     if (text.contains("=")) {
-                        if (!client.player.getGameMode().isCreative()) textPosX += 10;
+                        GameMode gameMode = ObjectUtils.defaultIfNull(client.player.getGameMode(), GameMode.SURVIVAL);
+                        if (!gameMode.isCreative()) textPosX += 10;
                         context.drawText(tr, Text.literal(text), textPosX, textPosY, 0xFF55FF55, false);
                     }
                 });
