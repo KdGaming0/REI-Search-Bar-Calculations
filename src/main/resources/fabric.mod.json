@@ -33,7 +33,7 @@
   "depends": {
     "fabricloader": ">=${loader_version}",
     "fabric": "*",
-    "minecraft": "${minecraft_version}",
+    "minecraft": ">=1.21.6",
     "roughlyenoughitems": ">=${rei_version}",
     "yet_another_config_lib_v3": ">=3.8.2+1.21.6-fabric",
     "modmenu": ">=15.0.1"
